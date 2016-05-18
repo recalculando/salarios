@@ -128,6 +128,9 @@ def crear_figura(canasta, salario, proyeccion_canasta, proyeccion_salario,
       La figura que resulta
   """
 
+  colors = ('#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854',
+           '#ffd92f', '#e5c494', '#b3b3b3')
+
   TOOLS = [bkm.PanTool(),
            bkm.WheelZoomTool(),
            bkm.BoxZoomTool(),
@@ -143,24 +146,24 @@ def crear_figura(canasta, salario, proyeccion_canasta, proyeccion_salario,
                      y_axis_type='log')
   else:
     raise ValueError('Opción {0} no encontrada'.format(estilo))
+  fig.plot_height = 540
+  fig.plot_width = 960
 
+  fig.line(canasta['fecha'], canasta['ipc'], color=colors[0],
+           legend='Costo de Vida (IPC San Luis)', line_width=3)
 
+  fig.circle(canasta['fecha'], canasta['ipc'], color=colors[0], size=6)
 
-  fig.line(canasta['fecha'], canasta['ipc'], color='navy',
-           legend='Costo de Vida (IPC San Luis)', line_width=2)
+  fig.line(salario['fecha'], salario['salario'], color=colors[1],
+           legend='Salario', line_width=3)
 
-  fig.circle(canasta['fecha'], canasta['ipc'], color='navy', size=8)
+  fig.circle(salario['fecha'], salario['salario'], color=colors[1], size=6)
 
-  fig.line(salario['fecha'], salario['salario'], color='green',
-           legend='Salario', line_width=2)
-
-  fig.circle(salario['fecha'], salario['salario'], color='green', size=8)
-
-  fig.line(proyeccion_salario['fecha'], proyeccion_salario['salario'], color='red',
-           legend='Paritarias Salario', line_width=2, line_dash='dashed')
+  fig.line(proyeccion_salario['fecha'], proyeccion_salario['salario'], color=colors[2],
+           legend='Paritarias Salario', line_width=3, line_dash='dashed')
 
   fig.line(proyeccion_canasta['fecha'], proyeccion_canasta['canasta'],
-           color='black', legend='Proyección Costo de Vida', line_width=2,
+           color=colors[3], legend='Proyección Costo de Vida', line_width=3,
            line_dash='dashed')
 
   fig.legend[0].location = 'top_left'
