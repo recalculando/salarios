@@ -14,7 +14,7 @@ salario['docentes UBA'] = 100 * salario['docentes UBA']/salario['docentes UBA'][
 ultimo = salario['fecha'].values[-1]
 fin_paritarias = pd.Timestamp('2017-03-01')
 agregado = pd.date_range(freq='m', start=pd.Timestamp(ultimo), end=fin_paritarias)
-agregado += pd.Timedelta('1 day') - pd.Timedelta('1 M')
+#agregado += pd.Timedelta('1 day') - pd.Timedelta('1 M')
 oferta = [[(pd.Timestamp('2016-05-01'), 18), (pd.Timestamp('2016-11-01'), 15)],]
 
 a = oferta[0]
@@ -29,7 +29,7 @@ for i, mes in enumerate(proyectado['fecha']):
   b = False
   for _ in a:
     if mes == _[0]:
-      print mes
+      print (mes)
       s[i] = s[i-1] * (1 + _[1]/100)
       b = True
       continue
