@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Script de ejemplo
 """
@@ -5,7 +6,7 @@ Script de ejemplo
 import pandas as pd
 import bokeh.io as bkio
 import bokeh.plotting as bkp
-import bokeh.model as bkm
+import bokeh.models as bkm
 import numpy as np
 import salarios as sl
 
