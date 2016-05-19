@@ -35,22 +35,23 @@ def proyectar_salarios(salario, fecha_comienzo, fecha_fin, oferta):
   proyectado : pandas DataFrame
       Un Dataframe con fechas y valores de la proyección
   """
+  #Quickhack para prependear la fecha inicial
+  fecha_comienzo = fecha_comienzo-pd.Timedelta('31 day')
   fechas = pd.date_range(freq='m', start=fecha_comienzo, end=fecha_fin)
   fechas += pd.Timedelta('1 day') # Porque si no da el último día del mes
   s = np.zeros_like(fechas.values, dtype=np.float).flatten()
 
   for i, mes in enumerate(fechas):
     if i == 0:
-      s0 = salario
+      s[i] = salario
     else:
-      s0 = s[i-1]
-    b = False
-    for of in oferta:
-      if mes == of[0]:
-        s[i] = s0 * (1 + of[1]/100.0)
-        b = True
-        continue
-    if not b: s[i] = s0
+      b = False
+      for of in oferta:
+        if mes == of[0]:
+          s[i] = s[i-1] * (1 + of[1]/100.0)
+          b = True
+          continue
+      if not b: s[i] = s[i-1]
 
   proyectado = pd.DataFrame({'fecha': fechas,
                              'salario': s})
@@ -82,17 +83,20 @@ def proyectar_canasta(canasta, fecha_comienzo, fecha_fin, porcentaje):
   proyectado : pandas DataFrame
       Un Dataframe con fechas y valores de la proyección
   """
-  fechas = pd.date_range(freq='m', start=fecha_comienzo, end=fecha_fin)
+  #Quickhack para prependear la fecha inicial
+  fecha_comienzo = fecha_comienzo-pd.Timedelta('31 day')
+  fechas = pd.date_range(freq='m',
+                         start=fecha_comienzo,
+                         end=fecha_fin)
   fechas += pd.Timedelta('1 day') # Porque si no da el último día del mes
   s = np.zeros_like(fechas.values, dtype=np.float).flatten()
 
 
   for i, _ in enumerate(fechas):
     if i == 0:
-      s0 = canasta
+      s[i] = canasta
     else:
-      s0 = s[i-1]
-    s[i] = s0 * (1 + porcentaje/100.0)
+      s[i] = s[i-1] * (1 + porcentaje/100.0)
 
   proyectado = pd.DataFrame({'fecha': fechas,
                              'canasta': s})
