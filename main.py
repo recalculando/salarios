@@ -22,7 +22,8 @@ canasta_inicial = ipc['ipc'].values[-1]
 fecha_comienzo = salario['fecha'].values[-1]
 fin_paritarias = pd.Timestamp('2017-03-01')
 
-oferta = [(pd.Timestamp('2016-06-01'), 18), (pd.Timestamp('2016-11-01'), 15)]
+oferta = [(pd.Timestamp('2016-06-01'), 18), (pd.Timestamp('2016-10-01'), 6.35),
+          (pd.Timestamp('2016-12-01'), 5.98), (pd.Timestamp('2017-01-01'), 1.5) ]
 
 proy_salario = sl.proyectar_salarios(salario_inicial,
                                      fecha_comienzo,
